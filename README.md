@@ -1,6 +1,16 @@
 # CertValidator
 
-TODO: Write a gem description
+Validate an X509 certificate against its CRL or OCSP endpoint. Raise exceptions
+if OCSP isn't available.
+
+## Compatibility
+
+This project aims for compatibility with:
+
+* Ruby 1.9.3
+* Ruby 2.0
+* Ruby 2.1
+* JRuby 1.7 in Ruby 1.9 and 2.0 modes
 
 ## Installation
 
@@ -18,7 +28,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+some_cert # an OpenSSL::X509::Certificate
+
+validator = CertValidator.new some_cert
+
+validator.crl_available? # return true if certificate has a CRL endpoint
+
+validator.crl_valid? # validate against the certificate's CRL endpoint
+
+validator.crl_file = some_path # allow overriding the CRL
+
+# return true if certificate has an OCSP endpoint and the Ruby OpenSSL module
+# supports OCSP
+validator.ocsp_available?
+
+validator.ocsp_valid? # validate against the certificate's OCSP endpoint
+```
 
 ## Contributing
 

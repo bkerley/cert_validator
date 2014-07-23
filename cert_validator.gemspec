@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = CertValidator::VERSION
   spec.authors       = ["Bryce Kerley"]
   spec.email         = ["bkerley@brycekerley.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Validate X509 certificates against CRL and OCSP.}
+  spec.description   = %q{Validate an X509 certificate against its listed OCSP endpoint and/or a CRL.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
