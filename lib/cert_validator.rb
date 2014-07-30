@@ -1,4 +1,4 @@
-%w{version errors asn1 crl_validator}.each { |f| require "cert_validator/#{f}" }
+%w{version errors asn1 crl_validator ocsp}.each { |f| require "cert_validator/#{f}" }
 
 class CertValidator
   attr_reader :certificate
