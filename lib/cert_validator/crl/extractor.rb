@@ -12,6 +12,10 @@ class CertValidator
         decoded_payload.value.map{ |v| descend_to_string v.value }
       end
 
+      def has_distribution_points?
+        ! distribution_points.empty?
+      end
+
       def has_crl_extension?
         !! crl_extension
       end

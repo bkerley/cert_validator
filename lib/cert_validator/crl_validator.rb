@@ -2,21 +2,39 @@ require 'cert_validator/crl/extractor'
 class CertValidator
   class CrlValidator
     attr_reader :certificate
+    attr_reader :ca
     attr_writer :crl
 
     attr_reader :revoked_time
 
-    def initialize(cert)
+    def initialize(cert, ca)
       @certificate = cert
+      @ca = ca
     end
 
     def available?
       return true if has_crl_data?
       return false unless extractor.has_distribution_points?
+
+      begin
+        return false unless vivified_crl
+      rescue OpenSSL::X509::CRLError
+        return false
+      end
+
+      return true
     end
 
     def valid?
       return false unless available?
+
+      begin
+        return false unless vivified_crl
+      rescue OpenSSL::X509::CRLError
+        return false
+      end
+
+      return false unless matches_ca?
       
       return false if revoked?
 
@@ -59,6 +77,10 @@ class CertValidator
         next if entry.nil?
         @revoked_time = entry.time
       end
+    end
+
+    def matches_ca?
+      vivified_crl.verify ca.public_key
     end
   end
 end
