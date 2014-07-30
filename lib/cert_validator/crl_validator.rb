@@ -4,6 +4,8 @@ class CertValidator
     attr_reader :certificate
     attr_writer :crl
 
+    attr_reader :revoked_time
+
     def initialize(cert)
       @certificate = cert
     end
@@ -16,6 +18,9 @@ class CertValidator
     def valid?
       return false unless available?
       
+      return false if revoked?
+
+      return true
     end
 
     def crl
@@ -41,6 +46,19 @@ class CertValidator
       return resp.body if resp.code == 200
 
       return nil
+    end
+
+    def vivified_crl
+      @vivified_crl ||= OpenSSL::X509::CRL.new crl
+    end
+
+    def revoked?
+      vivified_crl.revoked.find do |entry|
+        entry.serial == certificate.serial
+      end.tap do |entry|
+        next if entry.nil?
+        @revoked_time = entry.time
+      end
     end
   end
 end

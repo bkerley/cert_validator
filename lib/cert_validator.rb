@@ -8,7 +8,7 @@ class CertValidator
   end
 
   def crl=(crl)
-    crL_validator.crl = crl
+    crl_validator.crl = crl
   end
 
   def crl_available?
