@@ -1,5 +1,7 @@
 require 'cert_validator'
-require_relative './support/certs'
+%w{certs validator_expectations}.each do |f|
+  require_relative "./support/#{f}"
+end
 
 RSpec.configure do |config|
 
