@@ -13,4 +13,10 @@ class CertValidator
       super "Tried to extract a value from a recursive structure. Please file a bug!"
     end
   end
+
+  class CrlFetchError < Error
+    def initialize
+      super "Couldn't fetch CRL."
+    end
+  end
 end
