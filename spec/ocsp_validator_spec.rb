@@ -1,5 +1,6 @@
+require 'cert_validator/ocsp/real_validator'
 
-describe CertValidator::OcspValidator, real_ocsp: true do
+describe CertValidator::RealOcspValidator, real_ocsp: true do
   subject{ described_class.new good_cert, ca }
   let(:ca){ cert 'root' }
   let(:good_cert){ cert 'good' }

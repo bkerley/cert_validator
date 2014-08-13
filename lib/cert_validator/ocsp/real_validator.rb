@@ -1,5 +1,5 @@
 class CertValidator
-  class OcspValidator
+  class RealOcspValidator
     
   end
 end
