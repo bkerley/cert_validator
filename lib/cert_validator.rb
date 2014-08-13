@@ -2,9 +2,11 @@
 
 class CertValidator
   attr_reader :certificate
+  attr_reader :ca
 
-  def initialize(cert)
+  def initialize(cert, ca)
     @certificate = cert
+    @ca = ca
   end
 
   def crl=(crl)
@@ -21,6 +23,6 @@ class CertValidator
 
   private
   def crl_validator
-    @crl_validator ||= CrlValidator.new certificate
+    @crl_validator ||= CrlValidator.new certificate, ca
   end
 end
