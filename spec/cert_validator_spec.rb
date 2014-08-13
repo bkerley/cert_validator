@@ -4,7 +4,7 @@ describe CertValidator do
   let(:ca){ cert 'root' }
 
   it 'accepts a certificate on construction' do
-    expect{ described_class.new good_cert }.to_not raise_error
+    expect{ described_class.new good_cert, ca }.to_not raise_error
   end
   it 'provides read-only access to the certificate' do
     expect(subject.certificate).to eq good_cert
@@ -13,12 +13,12 @@ describe CertValidator do
   describe 'CRL functionality' do
     let(:mismatched_crl_validator) do
       described_class.new(good_cert, ca).tap do |validator|
-        valitdator.crl = crl 'mismatched'
+        validator.crl = crl 'mismatched'
       end
     end
 
     let(:revoked_crl_validator) do
-      described_class.new(cert 'revoked', ca).tap do |validator|
+      described_class.new(cert('revoked'), ca).tap do |validator|
         validator.crl = crl 'revoked'
       end
     end
