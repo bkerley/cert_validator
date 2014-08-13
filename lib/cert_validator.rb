@@ -21,8 +21,20 @@ class CertValidator
     crl_validator.valid?
   end
 
+  def ocsp_available?
+    ocsp_validator.available?
+  end
+
+  def ocsp_valid?
+    ocsp_validator.valid?
+  end
+
   private
   def crl_validator
     @crl_validator ||= CrlValidator.new certificate, ca
+  end
+
+  def ocsp_validator
+    @ocsp_validator ||= OcspValidator.new certificate, ca
   end
 end

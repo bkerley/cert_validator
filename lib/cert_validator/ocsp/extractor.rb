@@ -14,7 +14,7 @@ class CertValidator
       end
 
       def has_ocsp_extension?
-        !! ocsp_extension
+        !! (ocsp_extension && ocsp_extension_payload)
       end
 
       def ocsp_extension
@@ -26,7 +26,7 @@ class CertValidator
       end
 
       def ocsp_extension_payload
-        content = decoded_extension.value.detect do |v|
+        @ocsp_extension_payload ||= decoded_extension.value.detect do |v|
           v.first.value == 'OCSP'
         end.value[1].value
       end
