@@ -48,7 +48,7 @@ describe CertValidator do
 
   describe 'OCSP functionality' do
     it 'returns if OCSP validation is available or not' do
-      expect(subject.ocsp_available?).to(eq(true)).or.to(eq(false))
+      expect(subject.ocsp_available?).to eq(true).or eq(false)
     end
 
     describe 'when available' do
