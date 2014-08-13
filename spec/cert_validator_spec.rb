@@ -11,6 +11,12 @@ describe CertValidator do
   end
 
   describe 'CRL functionality' do
+    let(:matched_crl_validator) do
+      described_class.new(good_cert, ca).tap do |validator|
+        validator.crl = crl 'revoked'
+      end
+    end
+
     let(:mismatched_crl_validator) do
       described_class.new(good_cert, ca).tap do |validator|
         validator.crl = crl 'mismatched'
@@ -28,7 +34,7 @@ describe CertValidator do
     end
 
     it 'positively valdiates a correct CRL' do
-      expect(subject.crl_valid?).to be
+      expect(matched_crl_validator.crl_valid?).to be
     end
 
     it 'negatively validates a mismatched CRL' do
