@@ -11,7 +11,7 @@ class CertValidator
     end
 
     def valid?
-      false
+      raise OcspNotAvailableError.new
     end
   end
 end

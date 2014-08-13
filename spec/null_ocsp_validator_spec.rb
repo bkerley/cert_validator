@@ -11,6 +11,9 @@ describe CertValidator::NullOcspValidator do
 
   describe 'with a good cert and CA' do
     it { is_expected.to_not be_available }
-    it { is_expected.to_not be_valid }
+
+    it 'raises an error when asked to validate' do
+      expect{ subject.valid? }.to raise_error CertValidator::OcspNotAvailableError
+    end
   end
 end
