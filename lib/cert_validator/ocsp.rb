@@ -1,3 +1,5 @@
+require 'openssl'
+
 if defined? OpenSSL::OCSP
   require 'cert_validator/ocsp/real_validator.rb'
 
