@@ -67,7 +67,13 @@ class CertValidator
     end
 
     def vivified_crl
-      @vivified_crl ||= OpenSSL::X509::CRL.new crl
+      return @vivified_crl if defined? @vivified_crl
+
+      if crl.is_a? OpenSSL::X509::CRL
+        return @vivified_crl = crl
+      else
+        return @vivified_crl = OpenSSL::X509::CRL.new(crl)
+      end
     end
 
     def revoked?

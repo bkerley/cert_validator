@@ -26,9 +26,25 @@ class CertValidator
       end
 
       def ocsp_extension_payload
-        @ocsp_extension_payload ||= decoded_extension.value.detect do |v|
+        return @ocsp_extension_payload if defined? @ocsp_extension_payload
+
+        intermediate = decoded_extension.value.detect do |v|
           v.first.value == 'OCSP'
         end.value[1].value
+
+        @ocsp_extension_payload = descend_to_string(intermediate)
+      end
+
+      def descend_to_string(asn_data)
+        seen = Set.new
+        current = asn_data
+        loop do
+          raise RecursiveExtractError.new if seen.include? current
+          seen.add current
+          current = current.first.value
+
+          return current if current.is_a? String
+        end
       end
     end
   end
