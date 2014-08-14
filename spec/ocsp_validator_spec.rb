@@ -1,4 +1,5 @@
 require 'cert_validator/ocsp/real_validator'
+require 'logger'
 
 describe CertValidator::RealOcspValidator, real_ocsp: true do
   subject{ described_class.new good_cert, ca }
@@ -15,16 +16,18 @@ describe CertValidator::RealOcspValidator, real_ocsp: true do
   end
 
   describe 'with a revoked cert' do
+    subject { described_class.new cert('revoked'), ca }
     it { is_expected.to be_available }
     it { is_expected.to_not be_valid }
   end
 
-  describe 'with an irrelevant OCSP response' do
+  pending 'with an irrelevant OCSP response' do
     it { is_expected.to be_available }
     it { is_expected.to_not be_valid }
   end
 
   describe 'with a cert with no OCSP data' do
+    subject { described_class.new cert('crl_only'), ca }
     it { is_expected.to_not be_available }
     it { is_expected.to_not be_valid }
   end

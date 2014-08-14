@@ -7,7 +7,9 @@ RSpec.configure do |config|
 
   config.include Certs
 
-  unless defined? OpenSSL::OCSP
+  if defined? OpenSSL::OCSP
+    config.filter_run_excluding null_ocsp: true
+  else
     config.filter_run_excluding real_ocsp: true
   end
 end

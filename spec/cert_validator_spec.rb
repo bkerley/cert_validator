@@ -51,13 +51,20 @@ describe CertValidator do
       expect(subject.ocsp_available?).to eq(true).or eq(false)
     end
 
-    describe 'when available' do
-      it 'positively validates a non-revoked OCSP response'
-      it 'negatively validates a mismatched OCSP response'
-      it 'negatively validates a revoked certificate'
+    describe 'when available', real_ocsp: true do
+      it 'positively validates a non-revoked OCSP response' do
+        v = described_class.new cert('good'), ca
+        expect(v.ocsp_valid?).to be
+      end
+      pending 'negatively validates a mismatched OCSP response'
+
+      it 'negatively validates a revoked certificate' do
+        v = described_class.new cert('revoked'), ca
+        expect(v.ocsp_valid?).to_not be
+      end
     end
 
-    describe 'when not available' do
+    describe 'when not available', null_ocsp: true do
       it 'raises when asked to validate OCSP' do
         expect{ subject.ocsp_valid? }.to raise_error CertValidator::OcspNotAvailableError
       end
