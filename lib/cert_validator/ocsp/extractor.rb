@@ -36,6 +36,7 @@ class CertValidator
       end
 
       def descend_to_string(asn_data)
+        return asn_data if asn_data.is_a? String
         seen = Set.new
         current = asn_data
         loop do
