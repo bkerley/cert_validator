@@ -13,7 +13,7 @@ describe CertValidator::RealOcspValidator::Extractor do
     end
 
     it 'extracts the OCSP endpoint' do
-      expect(subject.endpoint).to eq 'http://localhost:22022/ocsp'
+      expect(subject.endpoint).to eq 'http://cert-validator-test.herokuapp.com/ocsp'
     end
   end
 

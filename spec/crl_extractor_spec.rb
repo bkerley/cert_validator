@@ -26,7 +26,7 @@ describe CertValidator::CrlValidator::Extractor do
     it 'extracts the CRL distribution point' do
       points = nil
       expect{ points = subject.distribution_points }.to_not raise_error
-      expect(points).to eq ['http://localhost:22022/crl']
+      expect(points).to eq ['http://cert-validator-test.herokuapp.com/revoked.crl']
     end
   end
 
